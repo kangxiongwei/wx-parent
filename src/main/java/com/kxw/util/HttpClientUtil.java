@@ -99,7 +99,6 @@ public class HttpClientUtil {
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json");
             httpPost.addHeader("Cache-Control", "no-cache");
-            httpPost.addHeader("Postman-Token", "5c02303e-c7f4-b01d-d178-0203e8eb5787");
             httpPost.setEntity(new StringEntity(params, ContentType.APPLICATION_JSON));
             response = httpClient.execute(httpPost);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {

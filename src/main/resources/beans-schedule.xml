@@ -17,11 +17,16 @@
         <property name="targetMethod" value="refresh"/>
         <property name="concurrent" value="false"/>
     </bean>
-    <bean id="weChatRefreshAccessTokenCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <bean id="weChatRefreshAccessTokenCronTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="weChatRefreshAccessTokenTaskJob"/>
-        <!--每1小时40分钟刷新一次-->
-        <property name="cronExpression" value="0 40 */1 * * ?"/>
+        <property name="repeatInterval" value="6000000"/>
+        <property name="startDelay" value="0"/>
     </bean>
+    <!--<bean id="weChatRefreshAccessTokenCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="weChatRefreshAccessTokenTaskJob"/>
+        &lt;!&ndash;每100分钟刷新一次&ndash;&gt;
+        <property name="cronExpression" value="*/40 */1 * * * ?"/>
+    </bean>-->
 
     <!--触发任务调度-->
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

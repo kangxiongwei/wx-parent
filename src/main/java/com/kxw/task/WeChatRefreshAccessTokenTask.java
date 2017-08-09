@@ -17,8 +17,8 @@ public class WeChatRefreshAccessTokenTask {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatRefreshAccessTokenTask.class);
 
-    private static final String appId = "wx9909f1952c65a3ba";
-    private static final String appsecret = "d888b50fe6f9141965849200b2615732";
+    private static final String appId = "wx9909f1952c65a3ba"; //"wxf83ee44c66efede1";
+    private static final String appsecret = "d888b50fe6f9141965849200b2615732";  //"c5a72baae818a0c90b2c439d366749de";
     private static final String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appsecret;
 
     /**
@@ -29,7 +29,11 @@ public class WeChatRefreshAccessTokenTask {
         String resp = HttpClientUtil.sendGetRequest(url, null);
         try {
             JSONObject obj = JSON.parseObject(resp);
-            WeChatAccessToken.setAccessToken(obj.getString("access_token"));
+            if (obj.keySet().contains("access_token")) {
+                WeChatAccessToken.setAccessToken(obj.getString("access_token"));
+            } else {
+                logger.info("获取微信的token失败，错误原因{}", obj.getString("errmsg"));
+            }
         } catch (Exception e) {
             logger.error("刷新微信的token失败，重新尝试");
             refresh();
