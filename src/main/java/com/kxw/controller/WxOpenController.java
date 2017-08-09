@@ -1,10 +1,12 @@
 package com.kxw.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.kxw.enums.WeChatEvent;
 import com.kxw.model.WeChatAccessToken;
 import com.kxw.model.WeChatMenu;
 import com.kxw.util.HttpClientUtil;
 import com.kxw.util.SecureUtil;
+import com.kxw.util.XmlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
 
 /**
@@ -33,7 +36,7 @@ public class WxOpenController {
      * @param request
      * @return
      */
-    @RequestMapping("/init")
+    @RequestMapping(value = "/init", method = RequestMethod.GET)
     public void initWeChat(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String signature = request.getParameter("signature");
         String timestamp = request.getParameter("timestamp");
@@ -96,4 +99,49 @@ public class WxOpenController {
         logger.info("创建菜单完成，返回的结果为{}", resp);
     }
 
+    /**
+     * 处理事件请求
+     *
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "/init", method = RequestMethod.POST)
+    public void parseXml(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, String> map = XmlUtil.reqXml2Map(request);
+        if (map.get("MsgType").equals("event")) {
+            //如果是事件类型
+            WeChatEvent event = WeChatEvent.getWeChatEvent(map.get("Event"));
+            if (event == null) return;
+            switch (event) {
+                case CLICK:
+                    handleClickEvent(map, response);
+                    break;
+                default:
+                    logger.info("不支持当前事件类型{}", map.get("Event"));
+                    break;
+            }
+        } else {
+            logger.info(map.toString());
+        }
+    }
+
+    private void handleClickEvent(Map<String, String> map, HttpServletResponse response) {
+        if (map.get("EventKey").equalsIgnoreCase("V1001_TODAY_MUSIC")) {
+            logger.info("触发了今日歌曲菜单");
+            Map<String, String> respMap = new HashMap<>();
+            respMap.put("ToUserName", map.get("FromUserName"));
+            respMap.put("FromUserName", map.get("ToUserName"));
+            respMap.put("CreateTime", System.currentTimeMillis() + "");
+            respMap.put("MsgType", "text");
+            respMap.put("Content", "为爱痴狂\n记事本\n凉凉");
+            String xml = XmlUtil.reqMap2Xml(respMap);
+            try {
+                response.setContentType("application/xml;charset=UTF-8");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(xml);
+            } catch (IOException e) {
+                logger.error("写出消息报错", e);
+            }
+        }
+    }
 }

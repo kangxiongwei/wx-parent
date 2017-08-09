@@ -17,8 +17,8 @@ public class WeChatRefreshAccessTokenTask {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatRefreshAccessTokenTask.class);
 
-    private static final String appId = "wx9909f1952c65a3ba"; //"wxf83ee44c66efede1";
-    private static final String appsecret = "d888b50fe6f9141965849200b2615732";  //"c5a72baae818a0c90b2c439d366749de";
+    private static final String appId = "wx68ee73c80413af59"; //"wx9909f1952c65a3ba"; //"wxf83ee44c66efede1";
+    private static final String appsecret = "e4d1e9460b88b288a6063bb5c9caeecf"; //"d888b50fe6f9141965849200b2615732";  //"c5a72baae818a0c90b2c439d366749de";
     private static final String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appsecret;
 
     /**
@@ -26,7 +26,9 @@ public class WeChatRefreshAccessTokenTask {
      */
     public void refresh() {
         logger.info("开始刷新微信的token");
-        String resp = HttpClientUtil.sendGetRequest(url, null);
+        String accessToken = "fd3TM81TH_RKovqu9skGbUyl1gJZSCozeUsI4Hp02PNvjuS4I-ZYZ7zMSjL8qhzNhi51eFZGnukIxvtC1RnV-3A49oiOdWwCVU9wEvGNhHH4AFuarf44jSU9Bqq0D55gFBQfACAQMB";
+        WeChatAccessToken.setAccessToken(accessToken);
+        /*String resp = HttpClientUtil.sendGetRequest(url, null);
         try {
             JSONObject obj = JSON.parseObject(resp);
             if (obj.keySet().contains("access_token")) {
@@ -37,7 +39,7 @@ public class WeChatRefreshAccessTokenTask {
         } catch (Exception e) {
             logger.error("刷新微信的token失败，重新尝试");
             refresh();
-        }
+        }*/
     }
 
 

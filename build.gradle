@@ -52,6 +52,8 @@ dependencies {
     /*定时任务*/
     compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.0'
     compile group: 'org.quartz-scheduler', name: 'quartz-jobs', version: '2.3.0'
+    /*XML解析*/
+    compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
 }
 
 /*排除的jar包*/
