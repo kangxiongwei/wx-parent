@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="false" scanPeriod="1 minutes" debug="true">
+    <!--<property name="logPath" value="${logback.logPath}" />-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/console.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logPath}/console_%d{yyyyMMdd}.log</FileNamePattern>
+            <MaxHistory>90</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{yyyyMMdd HH:mm:ss} %level [%thread] [%logger{5}] - %msg%n</Pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>-->
+
+    <!--<logger name="org.jfaster.mango" level="info" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>-->
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="FileAppender"/>-->
+    </root>
+
+</configuration>
