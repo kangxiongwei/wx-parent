@@ -16,6 +16,19 @@ public class WeChatMenu {
 
     private List<WeChatMenu> sub_button; //子菜单
 
+    public WeChatMenu() {
+    }
+
+    public WeChatMenu(String name) {
+        this.name = name;
+    }
+
+    public WeChatMenu(String type, String name, String key) {
+        this.type = type;
+        this.name = name;
+        this.key = key;
+    }
+
     public String getType() {
         return type;
     }

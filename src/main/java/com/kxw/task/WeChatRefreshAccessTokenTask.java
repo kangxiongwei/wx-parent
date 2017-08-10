@@ -26,7 +26,7 @@ public class WeChatRefreshAccessTokenTask {
      */
     public void refresh() {
         logger.info("开始刷新微信的token");
-        String accessToken = "fd3TM81TH_RKovqu9skGbUyl1gJZSCozeUsI4Hp02PNvjuS4I-ZYZ7zMSjL8qhzNhi51eFZGnukIxvtC1RnV-3A49oiOdWwCVU9wEvGNhHH4AFuarf44jSU9Bqq0D55gFBQfACAQMB";
+        String accessToken = "vwRni6CgCOBs_RpfXlTdkGFpZereOC50Kh_42Wl9o2SjK6s9ynT2EupDctoeY4OSiauGxG5AkRoV0d4kQ4j78TNYSNdS0uCU_vWRknqhEC7YXxCCf0PbF0oUoCWOr7WoKUGhAJAEOA";
         WeChatAccessToken.setAccessToken(accessToken);
         /*String resp = HttpClientUtil.sendGetRequest(url, null);
         try {

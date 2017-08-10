@@ -8,6 +8,9 @@ public class WeChatAccessToken {
 
     private static String accessToken;
 
+    private WeChatAccessToken() {
+    }
+
     public static String getAccessToken() {
         return accessToken;
     }
